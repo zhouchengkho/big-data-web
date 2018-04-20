@@ -357,7 +357,7 @@
                         </div>
                         <div class="form-group">
                           <div class="col-md-12 col-sm-12 col-xs-12">
-                            <button class="btn btn-success" onclick="getVal()">Chose Table</button>
+                            <button onclick="getTableListVal()">Chose Table</button>
                           </div>
                         </div>
                         <div class="form-group">
@@ -486,7 +486,7 @@
   <script src="../build/js/custom.min.js"></script>
 
   <script>
-  function getVal() {
+  function getTableListVal() {
     var  myselect=document.getElementById("tablelists");
     var  index=myselect.selectedIndex;
     document.getElementById("inputtable").placeholder = myselect.options[index].text;
