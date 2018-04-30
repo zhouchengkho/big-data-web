@@ -102,13 +102,13 @@
                                             <input type="text" class="form-control" placeholder="Table" id="table">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row form-group">
+                                        <div class="col-xs-12">
                                             <input type="text" class="form-control" placeholder="Column" id="column1">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row form-group">
+                                        <div class="col-xs-12">
                                             <input type="text" class="form-control" placeholder="Column" id="column2">
                                         </div>
                                     </div>
@@ -232,15 +232,15 @@
                 {  
                     FieldCount++; //text box added increment  
                     //add input box  
-                    $(SubmitButton).before('<div class="form-group"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" class="form-control" placeholder="Column" id="column'+ FieldCount +'"><a href="#" class="removeclass">×</a></div>');
-                    x++; //text box increment  
+                    $(SubmitButton).before('<div class="row form-group"><div class="col-xs-10"><input type="text" class="form-control" placeholder="Column" id="column'+ FieldCount +'"></div><div class="col-xs-2"><a href="#" class="removeclass">×</a></div>');
+                    x++; //text box increment
                 }  
         return false;  
     });  
       
     $("body").on("click",".removeclass", function(e){ //user click on remove text  
         if( x > 1 ) {  
-                $(this).parent('div').remove(); //remove text box  
+                $(this).parent('div').parent('div').remove(); //remove text box  
                 x--; //decrement textbox
         }  
         return false;  
