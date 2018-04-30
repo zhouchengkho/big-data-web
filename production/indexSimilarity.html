@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Data Ninja!</title>
+
+  <!-- Bootstrap -->
+  <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="../build/css/custom.min.css" rel="stylesheet">  
+</head>
+
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+
+<body class="nav-md">
+<div class="container body">
+  <div class="main_container col-md-12">
+    <!-- side bar -->
+    <div class="col-md-3">
+      <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+          <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Data Ninja!</span></a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <br/>
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+          <div class="menu_section">
+            <h3>Choose Analysis Feature</h3>
+            <ul class="nav side-menu">
+              <li>
+                <a href="indexSingleProfile.html">Simple Profile</a>
+              </li>
+              <li>
+                <a href="indexColumnValues.html">Column Values</a>
+              </li>
+              <li>
+                <a href="indexCommonValues.html">Common Values</a>
+              </li>
+              <li>
+                <a href="indexColumnCorrelations.html">Column Correlations</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /sidebar menu -->
+      </div>
+    </div>
+    <!-- end of side bar -->
+
+    <!-- page content -->
+    <div class="col-md-9" role="main">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="x_panel full-screen">
+            <div class="x_title">
+              <h2>Data Ninja Table Querier</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                     aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+              <!-- start project-detail sidebar -->
+              <div class="col-md-3 col-sm-3 col-xs-12">
+
+                <section class="panel">
+
+                  <div class="x_title">
+                    <h2>Jaccard Similarity</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="movies_metadata" placeholder="Table A" id="table1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="genres" placeholder="Column A" id="column1">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="movies_metadata" placeholder="Table B" id="table2">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="genres" placeholder="Column B" id="column2">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <button id="submit" class="btn btn-success">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </section>
+
+              </div>
+              <!-- end project-detail sidebar -->
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="x_panel">
+                    <div class="x_content">
+                      <p class="text-muted font-16 m-b-30">
+                        Jaccard Similarity :
+                      </p>
+                      <p id="jsvalue"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /page content -->
+
+  </div>
+</div>
+
+  <!-- jQuery -->
+  <script src="../vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="../vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="../vendors/nprogress/nprogress.js"></script>
+  <!-- ECharts -->
+  <script src="../vendors/echarts/dist/echarts.min.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="../build/js/custom.min.js"></script>
+
+
+  <script type="text/javascript">
+    let requestUrl = "http://167.99.13.127:8001/jaccard-similarity?";
+
+    $(document).on('ready', () => {
+        $('#submit').on('click', (e) => {
+            e.preventDefault();
+            let table1 = $('#table1').val();
+            let column1 = $('#column1').val();
+            let table2 = $('#table2').val();
+            let column2 = $('#column2').val();
+            if (!table1 || !column1 || !table2 || !column2) {
+                console.log("fill necessary fields");
+                return;
+            }
+            let options = {
+                url: requestUrl,
+                data: {
+                    tablea: table1,
+                    tableb: table2,
+                    columna: column1,
+                    columnb: column2
+                },
+                method: 'GET',
+                success: (result) => {
+                    // init_table(result);
+                    console.log(result);
+                    document.getElementById("jsvalue").innerHTML=result.val;
+                },
+
+                error: (err) => {
+                    console.log(err);
+                }
+            };
+            $.ajax(options);
+        })
+    })
+</script>  
+  
+</body>
+</html>
