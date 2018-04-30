@@ -92,24 +92,24 @@
                         <section class="panel">
 
                             <div class="x_title">
-                                <h2>Single Column Query</h2>
+                                <h2>Multiple Column Query</h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <form class="form-horizontal form-label-left">
+                                <form class="form-horizontal form-label-left" id="query-form">
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input type="text" class="form-control" value="movies_metadata" placeholder="Table" id="table">
+                                            <input type="text" class="form-control" placeholder="Table" id="table">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input type="text" class="form-control" value="0, 1" placeholder="Has values" id="hasVal">
+                                            <input type="text" class="form-control" placeholder="Column" id="column1">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <input type="text" class="form-control" value="2, 3" placeholder="Has values" id="notHasVal">
+                                            <input type="text" class="form-control" placeholder="Column" id="column2">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -118,6 +118,9 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" id="add-column">Add Column</button>
                             </div>
 
                         </section>
@@ -129,11 +132,11 @@
 
                         <br/>
 
-                        <!-- <div id="mainb" style="height:350px;"></div> -->
+                        <div id="mainb" style="height:350px;"></div>
 
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel">
-                                <!-- <div class="x_title">
+                                <div class="x_title">
                                     <h2>Button Example <small>Users</small></h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -151,20 +154,21 @@
                                         </li>
                                     </ul>
                                     <div class="clearfix"></div>
-                                </div> -->
+                                </div>
                                 <div class="x_content">
                                     <p class="text-muted font-13 m-b-30">
-                                        This interface provides the service of column value query. By submitting values in the hasVal column and notHasVal column, you will get the columns in which have values of "hasVal" and do not have values of "notHasVal"
+                                        The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
                                     </p>
-                                    <!-- <table id="datatable-buttons" class="table table-striped table-bordered">
+                                    <table id="datatable-buttons" class="table table-striped table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>val</th>
-                                            <th>count</th>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Salary</th>
+                                            <th>Office</th>
                                         </tr>
                                         </thead>
-                                    </table> -->
-                                    <div><h3 id="show"></h3></div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -177,6 +181,8 @@
     </div>
 </div>
 <!-- /page content -->
+
+
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -196,7 +202,7 @@
 <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
 <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
 <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script> 
+<script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
 <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
 <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
 <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
@@ -207,57 +213,43 @@
 <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
 
 <!-- Custom Theme Scripts -->
-<!-- <script src="../build/js/single-profile.js"></script> -->
+<script src="../build/js/single-profile.js"></script>
 
 <script type="text/javascript">
-    let requestUrl = "http://167.99.13.127:8001/column-value?";
+    $(document).ready(function() {  
+      
+        var MaxInputs       = 8; //maximum input boxes allowed  
+        var InputsWrapper   = $("#query-form"); //Input boxes wrapper ID  
+        var AddButton       = $("#add-column"); //Add button ID 
+        var SubmitButton    = $("#submit") 
+          
+        var x = InputsWrapper.length; //initlal text box count  
+        var FieldCount=3; //to keep track of text box added  
+          
+        $(AddButton).click(function (e)  //on add input button click  
+        {  
+                if(x <= MaxInputs) //max input box allowed  
+                {  
+                    FieldCount++; //text box added increment  
+                    //add input box  
+                    $(SubmitButton).before('<div class="form-group"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" class="form-control" placeholder="Column" id="column'+ FieldCount +'"><a href="#" class="removeclass">×</a></div>');
+                    x++; //text box increment  
+                }  
+        return false;  
+    });  
+      
+    $("body").on("click",".removeclass", function(e){ //user click on remove text  
+        if( x > 1 ) {  
+                $(this).parent('div').remove(); //remove text box  
+                x--; //decrement textbox
+        }  
+        return false;  
+    })   
+      
+    }); 
 
-    $(document).on('ready', () => {
-        $('#submit').on('click', (e) => {
-            e.preventDefault();
-            let table = $('#table').val();
-            let hasVal = $('#hasVal').val();
-            let notHasVal = $('#notHasVal').val();
-            if (!table || !hasVal || !notHasVal) {
-                console.log("fill necessary fields");
-                return;
-            }
-            let options = {
-                url: requestUrl,
-                data: {
-                    table: table,
-                    hasVal: hasVal,
-                    notHasVal: notHasVal
-                },
-                method: 'GET',
-                success: (result) => {
-                    // init_table(result);
-                    console.log(result);
-                    // $('#datatable-buttons').DataTable({
-                    //     "ordering": false,
-                    //     "data": result.data,
-                    //     "columns": [
-                    //         { "data": "val" },
-                    //         { "data": "count" },
-                    //     ]
-                    // });
-                    obj = document.getElementById("show");
-                    str = "";
-                    for(var i = 0; i < result.data.length - 1; i++) {
-                        str += result.data[i].val + ", ";
-                    }
 
-                    str = "The columns that includ values of " + hasVal + " but do not include values of " + notHasVal + " are: " + str + result.data[result.length - 1];
-                    obj.innerHTML = str
-
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            };
-            $.ajax(options);
-        })
-    })
 </script>
+
 </body>
 </html>
