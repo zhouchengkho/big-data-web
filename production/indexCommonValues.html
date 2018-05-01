@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Data Ninja!</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +20,8 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="./css/jquery.spin.css" rel="stylesheet">
+
 </head>
 
 <body class="nav-md">
@@ -50,6 +52,9 @@
                     </li>
                     <li>
                         <a href="indexColumnCorrelations.html">Column Correlations</a>
+                    </li>
+                    <li>
+                        <a href="indexSimilarity.html">Column Similarity</a>
                     </li>
                 </ul>
             </div>
@@ -85,31 +90,39 @@
                 </div>
 
                 <div class="x_content">
-
                     <!-- start project-detail sidebar -->
                     <div class="col-md-3 col-sm-3 col-xs-12">
 
                         <section class="panel">
 
                             <div class="x_title">
-                                <h2>Common Values Query</h2>
+                                <h2>Common Value Query</h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
                                 <form class="form-horizontal form-label-left" id="query-form">
-                                    <div class="form-group">
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" placeholder="Table" id="table">
+                                    <div class="col-xs-12 column-box">
+                                        <div class="form-group">
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" placeholder="Table" id="table1">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" placeholder="Column" id="column1">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" placeholder="Column" id="column1">
+                                    <div class="col-xs-12 column-box">
+                                        <div class="form-group">
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" placeholder="Table" id="table2">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-xs-10">
-                                            <input type="text" class="form-control" placeholder="Column" id="column2">
+                                        <div class="form-group">
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" placeholder="Column" id="column2">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group" id="append-before">
@@ -122,19 +135,32 @@
                                         </div>
                                     </div>
                                 </form>
+                                <div class="spin" data-spin/>
                             </div>
 
                         </section>
 
                     </div>
                     <!-- end project-detail sidebar -->
-
                     <!-- right page -->
                     <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <table id="datatable-buttons" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>val</th>
+                                            <th>count</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- end of right page -->
-
                 </div>
             </div>
         </div>
@@ -171,28 +197,40 @@
 <script src="../vendors/jszip/dist/jszip.min.js"></script>
 <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+<script src="./js/jquery.spin.js"></script>
 
 <!-- Custom Theme Scripts -->
 
 <script type="text/javascript">
     $(document).ready(function () {
+        let spinner = $('.spin');
+        spinner.spin("hide");
+        let MaxInputs = 8; //maximum input boxes allowed
+        let InputsWrapper = $("#query-form"); //Input boxes wrapper ID
+        let AddButton = $("#add-column"); //Add button ID
+        let SubmitButton = $("#submit");
+        let AppendBefore = $("#append-before");
+        let x = InputsWrapper.length; //initlal text box count
+        let FieldCount = 2; //to keep track of text box added
+        let requestUrl = "http://167.99.13.127:8001/common-value";
 
-        var MaxInputs = 8; //maximum input boxes allowed
-        var InputsWrapper = $("#query-form"); //Input boxes wrapper ID
-        var AddButton = $("#add-column"); //Add button ID
-        var SubmitButton = $("#submit");
-        var AppendBefore = $("#append-before");
-
-        var x = InputsWrapper.length; //initlal text box count  
-        var FieldCount = 2; //to keep track of text box added
-
-        $(AddButton).click(function (e)  //on add input button click  
-        {
+        $(AddButton).click( (e) => {
             if (x <= MaxInputs) //max input box allowed
             {
                 FieldCount++; //text box added increment
                 //add input box
-                $(AppendBefore).before('<div class="row form-group"><div class="col-xs-10"><input type="text" class="form-control" placeholder="Column" id="column' + FieldCount + '"></div><div class="col-xs-2"><a href="#" class="removeclass">×</a></div>');
+                $(AppendBefore).before('<div class="col-xs-12 column-box">\n' +
+                    '                                        <div class="form-group">\n' +
+                    '                                            <div class="col-xs-10">\n' +
+                    '                                                <input type="text" class="form-control" placeholder="Table" id="table' + FieldCount + '">\n' +
+                    '                                            </div><div class="col-xs-2"><a href="#" class="removeclass">×</a></div>' +
+                    '                                        </div>\n' +
+                    '                                        <div class="form-group">\n' +
+                    '                                            <div class="col-xs-10">\n' +
+                    '                                                <input type="text" class="form-control" placeholder="Column" id="column' + FieldCount + '">\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>\n' +
+                    '                                    </div>');
                 x++; //text box increment
             }
             return false;
@@ -200,7 +238,7 @@
 
         $("body").on("click", ".removeclass", function (e) { //user click on remove text
             if (x > 1) {
-                $(this).parent('div').parent('div').remove(); //remove text box  
+                $(this).parent('div').parent('div').parent('div').remove(); //remove text box
                 x--; //decrement textbox
                 FieldCount--;
             }
@@ -209,15 +247,48 @@
 
         $(SubmitButton).on("click", (e) => {
             e.preventDefault();
-            console.log("clicked");
-            let column = $("#column1");
-            console.log(column.val());
-            let columnCount = 2;
-            while (columnCount <= FieldCount) {
-                column = $("#column"+columnCount);
-                console.log(column.val());
-                columnCount++;
+            spinner.spin("show");
+            let tables = [];
+            let columns = [];
+            let count = 1;
+            while (count <= FieldCount) {
+                let table = $("#table" + count);
+                let column = $("#column" + count);
+                let tableValue = table.val();
+                let columnValue = column.val();
+                if (!tableValue || !columnValue) {
+                    console.log("fill necessary fields");
+                    return;
+                }
+                tables.push(tableValue);
+                columns.push(columnValue);
+                count++;
             }
+            let options = {
+                url: requestUrl,
+                data: {
+                    tables: tables.join(","),
+                    columns: columns.join(",")
+                },
+                method: 'GET',
+                success: (result) => {
+                    $('#datatable-buttons').DataTable({
+                        "ordering": false,
+                        "data": result.data,
+                        "columns": [
+                            {"data": "val"},
+                            {"data": "count"},
+                        ]
+                    });
+                    spinner.spin("hide");
+                },
+                error: (err) => {
+                    spinner.spin("hide");
+                    console.log(err);
+                }
+            };
+            $.ajax(options);
+            console.log(options);
         });
 
     });

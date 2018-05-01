@@ -19,7 +19,8 @@
   <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
   <!-- Custom Theme Style -->
-  <link href="../build/css/custom.min.css" rel="stylesheet">  
+  <link href="../build/css/custom.min.css" rel="stylesheet">
+  <link href="./css/jquery.spin.css" rel="stylesheet">
 </head>
 
 <style>
@@ -73,6 +74,9 @@
               </li>
               <li>
                 <a href="indexColumnCorrelations.html">Column Correlations</a>
+              </li>
+              <li>
+                <a href="indexSimilarity.html">Column Similarity</a>
               </li>
             </ul>
           </div>
@@ -147,6 +151,7 @@
                         </div>
                       </div>
                     </form>
+                    <div class="spin" data-spin/>
                   </div>
 
                 </section>
@@ -186,17 +191,17 @@
   <script src="../vendors/nprogress/nprogress.js"></script>
   <!-- ECharts -->
   <script src="../vendors/echarts/dist/echarts.min.js"></script>
-
-  <!-- Custom Theme Scripts -->
-  <script src="../build/js/custom.min.js"></script>
+<script src="./js/jquery.spin.js"></script>
 
 
   <script type="text/javascript">
     let requestUrl = "http://167.99.13.127:8001/jaccard-similarity?";
-
+    let spinner = $(".spin");
     $(document).on('ready', () => {
+        spinner.spin("hide");
         $('#submit').on('click', (e) => {
             e.preventDefault();
+            spinner.spin("show");
             let table1 = $('#table1').val();
             let column1 = $('#column1').val();
             let table2 = $('#table2').val();
@@ -218,10 +223,12 @@
                     // init_table(result);
                     console.log(result);
                     document.getElementById("jsvalue").innerHTML=result.val;
+                    spinner.spin("hide");
                 },
 
                 error: (err) => {
                     console.log(err);
+                    spinner.spin("hide");
                 }
             };
             $.ajax(options);
