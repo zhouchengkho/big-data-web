@@ -4679,3 +4679,7 @@ ul.notifications {
 .full-screen {
     height: 100vh;
 }
+
+.no-right-padding {
+    padding-right: 0px;
+}
