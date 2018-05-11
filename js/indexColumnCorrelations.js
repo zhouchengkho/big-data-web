@@ -4,8 +4,7 @@ $(document).on('ready', () => {
     let spinner = $('.spin');
     spinner.spin('hide');
     $('#submit').on('click', (e) => {
-        e.preventDefault();
-        spinner.spin("show");
+        
         let table1 = $("#table1").val();
         let table2 = $("#table2").val();
         let column1 = $("#column1").val();
@@ -13,8 +12,48 @@ $(document).on('ready', () => {
         let join = $("#join").val();
         if (!table1 || !table2 || !column1 || !column2 || !join) {
             console.log("fill necessary fields");
-            return;
+
+            if(table1 == null || table1 == "") {
+                $('#table-alert1').show('fade');
+                setTimeout(function () {
+                    $('#table-alert1').hide('fade');
+                }, 3000);
+            }
+
+            if(table2 == null || table2 == "") {
+                $('#table-alert2').show('fade');
+                setTimeout(function () {
+                    $('#table-alert2').hide('fade');
+                }, 3000);
+            }
+
+            if(column1 == null || column1 == "") {
+                $('#column-alert1').show('fade');
+                setTimeout(function () {
+                    $('#column-alert1').hide('fade');
+                }, 3000);
+            }
+
+            if(column2 == null || column2 == "") {
+                $('#column-alert2').show('fade');
+                setTimeout(function () {
+                    $('#column-alert2').hide('fade');
+                }, 3000);
+            }
+
+            if(join == null || join == "") {
+                $('#join-alert').show('fade');
+                setTimeout(function () {
+                    $('#join-alert').hide('fade');
+                }, 3000);
+            }
+
+            return false;
         }
+
+        e.preventDefault();
+        spinner.spin("show");
+
         let options = {
             url: requestUrl,
             data: {

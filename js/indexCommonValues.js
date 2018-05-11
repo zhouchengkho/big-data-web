@@ -26,6 +26,9 @@ $(document).ready(function () {
                 '                                                <input type="text" class="form-control" placeholder="Column" id="column' + FieldCount + '">\n' +
                 '                                            </div>\n' +
                 '                                        </div>\n' +
+                '                                        <div id="alert' + FieldCount + '" class="alert alert-danger collapse col-xs-10" role="alert">\n' +
+                '                                            <strong>value required</strong>\n' +
+                '                                        </div>\n' +
                 '                                    </div>');
             x++; //text box increment
         }
@@ -42,24 +45,38 @@ $(document).ready(function () {
     })
 
     $(SubmitButton).on("click", (e) => {
-        e.preventDefault();
-        spinner.spin("show");
         let tables = [];
         let columns = [];
         let count = 1;
+        let fail = false;
         while (count <= FieldCount) {
             let table = $("#table" + count);
             let column = $("#column" + count);
             let tableValue = table.val();
             let columnValue = column.val();
+            let alertId = 'alert' + count;
             if (!tableValue || !columnValue) {
                 console.log("fill necessary fields");
-                return;
+
+                $('#' + alertId).show('fade');
+                setTimeout(function () {
+                    $('#' + alertId).hide('fade');
+                }, 3000);
+
+                fail = true;
             }
             tables.push(tableValue);
             columns.push(columnValue);
             count++;
         }
+
+        if(fail) {
+            return false;
+        }
+
+        e.preventDefault();
+        spinner.spin("show");
+
         let options = {
             url: requestUrl,
             data: {
