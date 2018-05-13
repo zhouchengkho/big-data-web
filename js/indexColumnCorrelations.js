@@ -65,6 +65,7 @@ $(document).on('ready', () => {
             },
             method: 'GET',
             success: (result) => {
+                document.getElementById("PearsonCorrelation").innerHTML=result.correlation.toFixed(2);
                 let g = echarts.init(document.getElementById("echart_scatter"));
                 g.setOption({
                     title: {text: "Scatter Graph", subtext: "Heinz  2003"},
@@ -104,6 +105,7 @@ $(document).on('ready', () => {
                     // }
                     ]
                 })
+                
                 spinner.spin("hide");
             },
             error: (err) => {

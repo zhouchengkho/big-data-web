@@ -125,6 +125,7 @@
                   </div>
                   <div class="panel-body">
                     <form class="form-horizontal form-label-left">
+                      
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           <input type="text" class="form-control" value="movies_metadata" placeholder="Table A" id="table1">
@@ -163,7 +164,51 @@
                         </div>
                       </div>
                     </form>
-                    <div class="spin" data-spin/>
+                    <!-- <div class="spin" data-spin/> -->
+                  </div>
+
+
+
+                  <!-- Cosine Similarity -->
+                  <div class="x_title">
+                    <h2>Cosine Similarity</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="panel-body">
+                    <form class="form-horizontal form-label-left">
+                      <div class="form-group">
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="movies_metadata" placeholder="Table" id="ctable1">
+                        </div>
+                        <div id="ctable-alert1" class="alert alert-danger collapse col-md-12 col-sm-12 col-xs-12">
+                            <strong>Table value required</strong> 
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="budget" placeholder="Column A" id="ccolumn1">
+                        </div>
+                        <div id="ccolumn-alert1" class="alert alert-danger collapse col-md-12 col-sm-12 col-xs-12">
+                            <strong>Column value required</strong> 
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <input type="text" class="form-control" value="budget" placeholder="Column B" id="ccolumn2">
+                        </div>
+                        <div id="ccolumn-alert2" class="alert alert-danger collapse col-md-12 col-sm-12 col-xs-12">
+                            <strong>Column value required</strong> 
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <button id="csubmit" class="btn btn-success">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- <div class="spin" data-spin/> -->
                   </div>
 
                 </section>
@@ -175,21 +220,23 @@
                   <div class="x_panel">
                     <div class="x_content">
                       <p class="text-muted font-16 m-b-30">
-                        Jaccard Similarity :
+                        Jaccard Similarity : <span id="jsvalue"></span>
                       </p>
-                      <p id="jsvalue"></p>
+                      <p class="text-muted font-16 m-b-30">
+                        Cosine Similarity : <span id="csvalue"></span>
+                      </p>
+                      <!-- <p id="jsvalue"></p> -->
                     </div>
                   </div>
+                  <div class="spin" data-spin/>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- /page content -->
-
   </div>
 </div>
 
@@ -206,6 +253,7 @@
 <script src="js/jquery.spin.js"></script>
 <!-- custom  script -->
 <script src="js/indexSimilarity.js"></script>
+<script src="js/indexCosineSimilarity.js"></script>
 <!-- end of custom script -->
 </body>
 </html>

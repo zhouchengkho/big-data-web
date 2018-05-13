@@ -1,41 +1,33 @@
-let requestUrl = "http://167.99.13.127:8001/jaccard-similarity?";
-let spinner = $(".spin");
+let crequestUrl = "http://167.99.13.127:8001/cosine-similarity?";
+// let spinner = $(".spin");
 $(document).on('ready', () => {
     spinner.spin("hide");
-    $('#submit').on('click', (e) => {
+    $('#csubmit').on('click', (e) => {
         
-        let table1 = $('#table1').val();
-        let column1 = $('#column1').val();
-        let table2 = $('#table2').val();
-        let column2 = $('#column2').val();
-        if (!table1 || !column1 || !table2 || !column2) {
+        let table1 = $('#ctable1').val();
+        let column1 = $('#ccolumn1').val();
+        let column2 = $('#ccolumn2').val();
+        if (!table1 || !column1 || !column2) {
             console.log("fill necessary fields");
 
             if(table1 == null || table1 == "") {
-                $('#table-alert1').show('fade');
+                $('#ctable-alert1').show('fade');
                 setTimeout(function () {
-                    $('#table-alert1').hide('fade');
-                }, 3000);
-            }
-
-            if(table2 == null || table2 == "") {
-                $('#table-alert2').show('fade');
-                setTimeout(function () {
-                    $('#table-alert2').hide('fade');
+                    $('#ctable-alert1').hide('fade');
                 }, 3000);
             }
 
             if(column1 == null || column1 == "") {
-                $('#column-alert1').show('fade');
+                $('#ccolumn-alert1').show('fade');
                 setTimeout(function () {
-                    $('#column-alert1').hide('fade');
+                    $('#ccolumn-alert1').hide('fade');
                 }, 3000);
             }
 
             if(column2 == null || column2 == "") {
-                $('#column-alert2').show('fade');
+                $('#ccolumn-alert2').show('fade');
                 setTimeout(function () {
-                    $('#column-alert2').hide('fade');
+                    $('#ccolumn-alert2').hide('fade');
                 }, 3000);
             }
             
@@ -46,10 +38,9 @@ $(document).on('ready', () => {
         spinner.spin("show");
 
         let options = {
-            url: requestUrl,
+            url: crequestUrl,
             data: {
-                tablea: table1,
-                tableb: table2,
+                table: table1,
                 columna: column1,
                 columnb: column2
             },
@@ -57,7 +48,7 @@ $(document).on('ready', () => {
             success: (result) => {
                 // init_table(result);
                 console.log(result);
-                document.getElementById("jsvalue").innerHTML=result.val.toFixed(2);
+                document.getElementById("csvalue").innerHTML=result.val.toFixed(2);
                 spinner.spin("hide");
             },
 
